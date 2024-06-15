@@ -170,5 +170,3 @@ else:
 !wget -q -O - ipv4.icanhazip.com
 !streamlit run app.py & npx localtunnel --port 8501
     """)
-
-# Note: Ensure the indentation and triple-quoted string are properly terminated in the `app.py` content.
