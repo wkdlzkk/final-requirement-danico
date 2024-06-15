@@ -172,6 +172,3 @@ print(pred)
 # else:
 #     st.write("by Vernie Jaica Danico...")
 
-! wget -q -O - ipv4.icanhazip.com
-
-! streamlit run app.py & npx localtunnel --port 8501
