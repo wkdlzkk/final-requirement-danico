@@ -20,7 +20,7 @@ def sayFeeling():
     elif any(word in negative_words for word in words):
         st.write("I hope you feel better soon. :disappointed:")
     else:
-        st.write("This is neutral. Keep going! :neutral_face:")
+        st.write("Keep going! :neutral_face:")
 
 st.button('Say it', on_click=sayFeeling)
 
