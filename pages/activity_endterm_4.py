@@ -1,7 +1,4 @@
 
-!pip install img2vec_pytorch
-!pip install scikit-learn==1.4.2
-
 from google.colab import drive
 drive.mount('/content/drive')
 
