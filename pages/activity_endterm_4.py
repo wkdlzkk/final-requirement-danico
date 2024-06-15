@@ -17,6 +17,7 @@ img2vec = Img2Vec()
 
 ## Streamlit Web App Interface
 st.set_page_config(layout="wide", page_title="Image Classification for Food")
+st.write("### Image Classification for Food!!")
 
 st.sidebar.write("## Upload and download :gear:")
 
