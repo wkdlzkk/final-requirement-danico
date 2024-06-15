@@ -3,7 +3,8 @@ import pandas as pd
 import pickle
 from nltk.corpus import names
 
-st.title("A Simple Sentiment Analyzer")
+st.title("Sentiment Analyzer")
+name = st.text_input("What's your name? ")
 message = st.text_input("Tell me what you feel today: ")
 
 # Define lists of positive and negative words
@@ -12,6 +13,7 @@ negative_words = ['bad', 'sad', 'angry', 'terrible', 'awful', 'miserable']
 
 # Function to classify the sentiment and display a message
 def sayFeeling():
+    st.write(f"Hi, {name}!")
     words = message.lower().split()
     if any(word in positive_words for word in words):
         st.write("That's good! :smile:")
