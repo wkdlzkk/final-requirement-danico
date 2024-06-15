@@ -72,6 +72,31 @@ Feel free to express yourself and see how the Sentiment Analyzer responds!
 """, unsafe_allow_html=True)
 
 st.image("./food_prediction.png")
+st.markdown("""
+This web application leverages a machine learning model to classify uploaded images based on food categories. Using a pre-trained model, it analyzes features extracted from images to predict and display the category of food depicted.
+
+How it Works:
+
+Input: Users upload an image containing food items using the sidebar file uploader.
+
+Analysis: The application extracts visual features from the uploaded image using a deep learning model.
+
+Classification: The extracted features are processed through a trained classifier, which predicts the category of food in the image.
+
+Output: The predicted food category is displayed alongside the uploaded image, providing instant classification results.
+
+Key Features:
+
+Efficient Classification: Utilizes image embeddings for accurate food category prediction.
+User-friendly Interface: Simple file upload interface with real-time classification feedback.
+Scalable: Handles image uploads up to 5MB in size for comprehensive food image analysis.
+Try it Out:
+
+Upload: Select an image file containing food items.
+Predict: Click the "Predict Category" button to see the predicted food category.
+Explore: Explore various food images and see how accurately they are classified!
+Explore the world of food through the lens of machine learning with our Image Classification for Food web application!
+""", unsafe_allow_html=True)
 
 
 hide_streamlit_style = """
