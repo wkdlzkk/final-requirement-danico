@@ -11,6 +11,8 @@ show_pages(
         Page("pages/img_classification.py", "Image Classification", "3️⃣", in_section=True),
         Page("pages/img_classification_lettuce_diseases.py", "Image Classification 2 (Lettuce Diseaes)", "4️⃣", in_section=True),
 
+        Section("Source Codes"),
+        Page("pages/sentiment_src.py", "Sentiment Analysis Source", "2️⃣", in_section=True),
 ]
 )
 
