@@ -19,7 +19,6 @@ import pickle
 import numpy as np
 from img2vec_pytorch import Img2Vec
 from PIL import Image, UnidentifiedImageError
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score
@@ -49,10 +48,8 @@ for j, dir_ in enumerate([train_dir, val_dir]):
     data[['training_labels', 'validation_labels'][j]] = labels
 
 from matplotlib import pyplot as plt
-import os
 
 data_dir = '/content/drive/MyDrive/dataset/train'
-
 class_names = sorted(os.listdir(data_dir))
 nrows = len(class_names)
 ncols = 5
@@ -81,13 +78,12 @@ param_grid = {
 }
 
 model = GridSearchCV(SVC(probability=True), param_grid, refit=True, verbose=2, scoring='accuracy')
-
 model.fit(data['training_data'], data['training_labels'])
 
 print(model.best_params_)
 print(model.best_score_)
 
-# save the model
+# Save the model
 with open('/content/foods.p', 'wb') as f:
     pickle.dump(model, f)
 
