@@ -8,7 +8,7 @@ show_pages(
         Section("Applications"),
         Page("pages/crop_recom_streamlitapp.py", "Prediction", "1️⃣", in_section=True),
         Page("pages/basic_sentiment_analyzer.py", "Sentiment Analysis", "2️⃣", in_section=True),
-        Page("pages/activity_endterm_4(1).py", "Image Classification", "3️⃣", in_section=True),
+        Page("pages/activity_endterm_4 (1).py", "Image Classification", "3️⃣", in_section=True),
         Page("pages/img_classification_lettuce_diseases.py", "Image Classification 2 (Lettuce Diseaes)", "4️⃣", in_section=True),
 
 ]
