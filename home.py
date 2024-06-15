@@ -68,6 +68,9 @@ Enter your name.
 Describe how you are feeling today.
 Click the "Analyze Sentiment" button to receive feedback.
 Feel free to express yourself and see how the Sentiment Analyzer responds!
+
+st.image("./food_prediction.png")
+
             
 ### ⭐ Star the project on Github  <iframe src="https://ghbtns.com/github-btn.html?user=koalatech&repo=streamlit_web_app&type=star&count=true"  width="150" height="20" title="GitHub"></iframe>   
 """, unsafe_allow_html=True)
