@@ -4,32 +4,31 @@ import streamlit as st
 st.header('Simple Sentiment Analyzer App')
 st.subheader('This python code is implemented for Streamlit')
 st.code('''
-        import streamlit as st
-        import pandas as pd
-        import pickle
-        from nltk.corpus import names
+       import streamlit as st
+import pandas as pd
+import pickle
+from nltk.corpus import names
 
-        st.title("A Simple Sentiment Analyzer")
-        message = st.text_input("Tell me what you feel today: ")
+st.title("Sentiment Analyzer")
+name = st.text_input("What's your name? ")
+message = st.text_input("Tell me what you feel today: ")
 
-        # Load the trained Naive Bayes classifier from the saved file
-        filename = 'pages/sentimentAnalyzerTest_model.sav'
-        loaded_model = pickle.load(open(filename, 'rb'))
+# Define lists of positive and negative words
+positive_words = ['good', 'excited', 'happy', 'great', 'fantastic', 'wonderful']
+negative_words = ['bad', 'sad', 'angry', 'terrible', 'awful', 'miserable']
 
-        # Define features (words) and their corresponding labels (positive/negative)
-        def word_features(words):
-            return dict([(word, True) for word in words])
+# Function to classify the sentiment and display a message
+def sayFeeling():
+    st.write(f"Hi, {name}!")
+    words = message.lower().split()
+    if any(word in positive_words for word in words):
+        st.write("That's good! :smile:")
+    elif any(word in negative_words for word in words):
+        st.write("I hope you feel better soon. :disappointed:")
+    else:
+        st.write("Keep going! :neutral_face:")
 
-        message_tone = loaded_model.classify(word_features(message.split()))
+st.button('Say it', on_click=sayFeeling)
 
-        # make a function for your button click
-
-        def sayFeeling():
-            # Classify the sentiment
-            if message_tone == 'positive':
-                st.write("this is :smile:")
-            else:
-                st.write("this is :disappointed:")
-                
-        st.button('Say it', on_click=sayFeeling)
-    ''')
+# To run on terminal issue this command
+# python -m streamlit run streamlit_test.py
