@@ -13,7 +13,7 @@ st.sidebar.write("## Upload and download :gear:")
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 # Load the pre-trained model
-with open('/pages/foods.p', 'rb') as f:
+with open('/content/foods.p', 'rb') as f:
     model = pickle.load(f)
 
 img2vec = Img2Vec()
