@@ -30,5 +30,3 @@ def sayFeeling():
 
 st.button('Say it', on_click=sayFeeling)
 
-# To run on terminal issue this command
-
