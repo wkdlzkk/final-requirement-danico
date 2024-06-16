@@ -12,6 +12,7 @@ show_pages(
 
 
         Section("Source Codes"),
+        Page("pages/crop_src.py", "Prediction Source", "1️⃣", in_section=True),
         Page("pages/sentiment_src.py", "Sentiment Analysis Source", "2️⃣", in_section=True),
         Page("pages/image_classification_src.py", "Image Classification Source", "3️⃣", in_section=True),
 ]
