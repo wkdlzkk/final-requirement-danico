@@ -1,33 +1,45 @@
-#Notes
-# do a "pip install streamlit" first 
-#to run on terminal issue this command
-# python -m streamlit run streamlit_test.py
-
 import streamlit as st
-import pandas as pd
 import pickle
-from nltk.corpus import names
 
 # Load the trained Naive Bayes classifier from the saved file
 filename = 'pages/crop_recom_model.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
 
-# # Use the model to make predictions
-@st.cache_data 
-def predict_crop():
-    st.text("The crop is " + crop_name)
-    return
-           
-st.title("Crop Recommendation Predictor :smile:")
-st.subheader("Enter a set of NPK levels to determine what crop best fits:")
-n_input = st.slider("Nitrogen: ",0,500)
-p_input = st.slider("Phosphorus: ",0,500)
-k_input = st.slider("Potassium: ",0,500)
-if n_input == 0 & p_input == 0 & k_input == 0:
-    crop_name = ""
-else:
-    crop_name = loaded_model.predict([[pd.to_numeric(n_input),pd.to_numeric(p_input),pd.to_numeric(k_input)]])
+try:
+    with open(filename, 'rb') as file:
+        loaded_model = pickle.load(file)
+except FileNotFoundError:
+    st.error(f"Model file '{filename}' not found. Please make sure the file path is correct.")
+    st.stop()
+except Exception as e:
+    st.error(f"Error loading model: {e}")
+    st.stop()
 
-st.text("The crop suitable for this NPK level:")
-st.text_area(label ="",value=crop_name, height =100)
-# st.button('Predict', on_click=predict_crop
+# Function to predict crop based on input NPK levels
+def predict_crop(n_input, p_input, k_input):
+    if n_input == '' or p_input == '' or k_input == '':
+        return "Enter Nitrogen, Phosphorus, and Potassium:"  
+    else:
+        try:
+            # Predict using the loaded model
+            n = float(n_input)
+            p = float(p_input)
+            k = float(k_input)
+            crop_name = loaded_model.predict([[n, p, k]])
+            return crop_name[0]  # Return the predicted crop name
+        except Exception as e:
+            return f"Prediction error: {e}"
+
+# Streamlit app
+st.title("Crop Predictor")
+
+# Input fields for NPK levels
+n_input = st.text_input("Nitrogen", "")
+p_input = st.text_input("Phosphorus", "")
+k_input = st.text_input("Potassium", "")
+
+# Predicting the crop
+crop_name = predict_crop(n_input, p_input, k_input)
+
+# Display the predicted crop name
+st.text("Predicted crop based on NPK levels:")
+st.text(crop_name)
