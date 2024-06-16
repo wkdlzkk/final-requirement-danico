@@ -1,7 +1,3 @@
-# Notes
-# do a "pip install streamlit" first 
-# to run on terminal issue this command
-# python -m streamlit run streamlit_test.py
 
 import streamlit as st
 import pandas as pd
@@ -93,5 +89,3 @@ def main():
         else:
             st.write("Model predicts the warranty to be of year less than 2.")
 
-if __name__ == '__main__':
-    main()
