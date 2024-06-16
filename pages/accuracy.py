@@ -5,6 +5,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 import pickle
 
+# Load the trained Random Forest classifier from the saved file
+model_path = 'random_forest_model.pkl'
+loaded_model = pickle.load(open(model_path, 'rb'))
+
 # Load your dataset and perform necessary preprocessing
 @st.cache
 def load_and_preprocess_data(file_path):
@@ -23,26 +27,8 @@ def load_and_preprocess_data(file_path):
 
     return X_train, X_test, y_train, y_test, brand_encoder
 
-# Train and save your model
-@st.cache(allow_output_mutation=True)
-def train_and_save_model(X_train, y_train):
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train)
-
-    # Save the model using pickle
-    with open('random_forest_model.pkl', 'wb') as f:
-        pickle.dump(model, f)
-
-    return model
-
-# Load the saved model
-def load_saved_model(model_path):
-    with open(model_path, 'rb') as f:
-        model = pickle.load(f)
-    return model
-
 # Function to make predictions
-def make_predictions(model, brand_encoder, new_instance):
+def make_prediction(model, brand_encoder, new_instance):
     new_instance_brand_encoded = brand_encoder.transform(pd.DataFrame(new_instance['brand']))
     new_instance_encoded = pd.concat([pd.DataFrame(new_instance_brand_encoded), pd.DataFrame(new_instance[['Price', 'Rating']])], axis=1)
     new_instance_encoded.columns = new_instance_encoded.columns.astype(str)
@@ -69,15 +55,8 @@ def main():
     file_path = 'pages/laptops.csv'  # Update with your dataset path
     X_train, X_test, y_train, y_test, brand_encoder = load_and_preprocess_data(file_path)
 
-    # Train and save model
-    model = train_and_save_model(X_train, y_train)
-
-    # Load saved model
-    model_path = 'random_forest_model.pkl'
-    loaded_model = load_saved_model(model_path)
-
     # Make predictions
-    prediction = make_predictions(loaded_model, brand_encoder, new_instance)
+    prediction = make_prediction(loaded_model, brand_encoder, new_instance)
 
     if st.sidebar.button('Predict Warranty'):
         if prediction[0] == 1:
