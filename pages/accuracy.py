@@ -15,7 +15,7 @@ import os
 print(f"Current directory: {os.getcwd()}")
 
 # Load the trained Random Forest classifier from the saved file
-model_path = 'prediction.p'
+model_path = 'pages/prediction.p'
 
 # Check if file exists
 if os.path.exists(model_path):
