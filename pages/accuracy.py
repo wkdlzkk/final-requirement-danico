@@ -4,10 +4,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 import pickle
+import sklearn
 
+# Check sklearn version
+print(f"scikit-learn version: {sklearn.__version__}")
 
+# Load the trained Random Forest classifier from the saved file
 model_path = 'random_forest_model.pkl'
-loaded_model = pickle.load(open(model_path, 'rb'))
+try:
+    loaded_model = pickle.load(open(model_path, 'rb'))
+except ModuleNotFoundError as e:
+    st.error(f"Error loading model: {e}")
 
 # Load your dataset and perform necessary preprocessing
 @st.cache
@@ -56,13 +63,15 @@ def main():
     X_train, X_test, y_train, y_test, brand_encoder = load_and_preprocess_data(file_path)
 
     # Make predictions
-    prediction = make_prediction(loaded_model, brand_encoder, new_instance)
-
-    if st.sidebar.button('Predict Warranty'):
-        if prediction[0] == 1:
-            st.write("Model predicts the warranty to be of year 2 or more.")
-        else:
-            st.write("Model predicts the warranty to be of year less than 2.")
+    try:
+        prediction = make_prediction(loaded_model, brand_encoder, new_instance)
+        if st.sidebar.button('Predict Warranty'):
+            if prediction[0] == 1:
+                st.write("Model predicts the warranty to be of year 2 or more.")
+            else:
+                st.write("Model predicts the warranty to be of year less than 2.")
+    except Exception as e:
+        st.error(f"Error making prediction: {e}")
 
 if __name__ == '__main__':
     main()
