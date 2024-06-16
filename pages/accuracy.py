@@ -1,3 +1,8 @@
+# Notes
+# do a "pip install streamlit" first 
+# to run on terminal issue this command
+# python -m streamlit run streamlit_test.py
+
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
