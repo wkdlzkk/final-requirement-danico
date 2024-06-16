@@ -82,7 +82,7 @@ def main():
     }
 
     # Load and preprocess data
-    file_path = 'pages/laptops.csv'  # Update with your dataset path
+    file_path = 'pages/predict.p'  # Update with your dataset path
     X_train, X_test, y_train, y_test, brand_encoder = load_and_preprocess_data(file_path)
 
     # Make predictions
