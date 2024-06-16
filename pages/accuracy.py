@@ -1,12 +1,11 @@
 # Notes
-# do a "pip install streamlit" first 
-# to run on terminal issue this command
-# python -m streamlit run streamlit_test.py
+# Before running the app, install Streamlit using: pip install streamlit
+# To run the app, use the following command in the terminal:
+# streamlit run streamlit_app.py
 
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 import pickle
 import os
@@ -21,20 +20,26 @@ model_path = 'pages/prediction.p'
 if os.path.exists(model_path):
     print(f"Model file found at: {model_path}")
 else:
-    print(f"Model file not found at: {model_path}")
+    st.error(f"Model file not found at: {model_path}")
+    st.stop()
 
 try:
     loaded_model = pickle.load(open(model_path, 'rb'))
 except FileNotFoundError as e:
     st.error(f"Error loading model: {e}")
+    st.stop()
 
 # Load your dataset and perform necessary preprocessing
-@st.cache
+@st.cache(allow_output_mutation=True)
 def load_and_preprocess_data(file_path):
-    df = pd.read_csv(file_path)
+    try:
+        df = pd.read_csv(file_path)
+    except FileNotFoundError:
+        st.error(f"Dataset file not found at: {file_path}")
+        st.stop()
 
     # Check unique values in the 'brand' column
-    print(f"Unique brands: {df['brand'].unique()}")
+    st.write(f"Unique brands: {df['brand'].unique()}")
 
     # Data preprocessing steps
     X = df[['Price', 'Rating']]
@@ -45,9 +50,9 @@ def load_and_preprocess_data(file_path):
 
     brand_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
     brand_encoded = brand_encoder.fit_transform(df[['brand']])
-    
+
     # Verify encoded categories
-    print(f"Encoded categories: {brand_encoder.categories_}")
+    st.write(f"Encoded categories: {brand_encoder.categories_}")
 
     X = pd.concat([pd.DataFrame(brand_encoded), X], axis=1)
     X.columns = X.columns.astype(str)
@@ -59,8 +64,8 @@ def load_and_preprocess_data(file_path):
 
 # Function to make predictions
 def make_prediction(model, brand_encoder, new_instance):
-    new_instance_brand_encoded = brand_encoder.transform(pd.DataFrame(new_instance['brand']))
-    new_instance_encoded = pd.concat([pd.DataFrame(new_instance_brand_encoded), pd.DataFrame(new_instance[['Price', 'Rating']])], axis=1)
+    new_instance_brand_encoded = brand_encoder.transform(pd.DataFrame([new_instance['brand']]))
+    new_instance_encoded = pd.concat([pd.DataFrame(new_instance_brand_encoded), pd.DataFrame([new_instance[['Price', 'Rating']]])], axis=1)
     new_instance_encoded.columns = new_instance_encoded.columns.astype(str)
     prediction = model.predict(new_instance_encoded)
     return prediction
@@ -76,9 +81,9 @@ def main():
     brand = st.sidebar.selectbox('Brand', ['asus', 'dell', 'hp', 'lenovo', 'acer', 'msi', 'apple'])
 
     new_instance = {
-        'Price': [price],
-        'Rating': [rating],
-        'brand': [brand]
+        'Price': price,
+        'Rating': rating,
+        'brand': brand
     }
 
     # Load and preprocess data
