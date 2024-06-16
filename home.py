@@ -4,6 +4,7 @@ from st_pages import Page, Section, show_pages, add_page_title, hide_pages
 add_page_title()
 show_pages(
     [   
+        Section("Danico BSIS3C"),
         Page("home.py",),
         Section("Applications"),
         Page("pages/crop_recom_streamlitapp.py", "Prediction", "1️⃣", in_section=True),
