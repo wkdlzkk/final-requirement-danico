@@ -47,4 +47,3 @@ if my_upload is not None:
 else:
     st.write("Upload an image to classify it.")
     ''')
-    ''')
