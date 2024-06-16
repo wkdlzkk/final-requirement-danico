@@ -5,9 +5,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 import pickle
 
-# Load the trained Random Forest classifier from the saved file
-model_path = 'random_forest_model.pkl'
 
+model_path = 'random_forest_model.pkl'
+loaded_model = pickle.load(open(model_path, 'rb'))
 
 # Load your dataset and perform necessary preprocessing
 @st.cache
