@@ -4,13 +4,7 @@ import streamlit as st
 st.header('Image Classification App')
 st.subheader('This python code is implemented for Streamlit')
 st.code('''
-        import streamlit as st
-
-
-st.header('Image Classification App')
-st.subheader('This python code is implemented for Streamlit')
-st.code('''
-        import pickle
+import pickle
 from PIL import Image
 from io import BytesIO
 from img2vec_pytorch import Img2Vec
