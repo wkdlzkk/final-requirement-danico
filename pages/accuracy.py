@@ -23,11 +23,6 @@ else:
     st.error(f"Model file not found at: {model_path}")
     st.stop()
 
-try:
-    loaded_model = pickle.load(open(model_path, 'rb'))
-except FileNotFoundError as e:
-    st.error(f"Error loading model: {e}")
-    st.stop()
 
 # Load your dataset and perform necessary preprocessing
 @st.cache(allow_output_mutation=True)
