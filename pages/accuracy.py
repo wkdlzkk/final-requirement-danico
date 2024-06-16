@@ -1,11 +1,8 @@
-
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.svm import SVC
+from sklearn.preprocessing import OneHotEncoder
 import pickle
 
 # Load your dataset and perform necessary preprocessing
@@ -13,7 +10,7 @@ import pickle
 def load_and_preprocess_data(file_path):
     df = pd.read_csv(file_path)
 
-    # Data preprocessing steps (similar to your previous code)
+    # Data preprocessing steps
     X = df[['Price', 'Rating']]
     y = df['year_of_warranty']
 
@@ -45,12 +42,11 @@ def load_saved_model(model_path):
     return model
 
 # Function to make predictions
-def make_predictions(model, scaler, brand_encoder, new_instance):
+def make_predictions(model, brand_encoder, new_instance):
     new_instance_brand_encoded = brand_encoder.transform(pd.DataFrame(new_instance['brand']))
     new_instance_encoded = pd.concat([pd.DataFrame(new_instance_brand_encoded), pd.DataFrame(new_instance[['Price', 'Rating']])], axis=1)
     new_instance_encoded.columns = new_instance_encoded.columns.astype(str)
-    new_instance_scaled = scaler.transform(new_instance_encoded)
-    prediction = model.predict(new_instance_scaled)
+    prediction = model.predict(new_instance_encoded)
     return prediction
 
 # Streamlit app
@@ -81,7 +77,7 @@ def main():
     loaded_model = load_saved_model(model_path)
 
     # Make predictions
-    prediction = make_predictions(loaded_model, X_train, brand_encoder, new_instance)
+    prediction = make_predictions(loaded_model, brand_encoder, new_instance)
 
     if st.sidebar.button('Predict Warranty'):
         if prediction[0] == 1:
@@ -89,3 +85,5 @@ def main():
         else:
             st.write("Model predicts the warranty to be of year less than 2.")
 
+if __name__ == '__main__':
+    main()
