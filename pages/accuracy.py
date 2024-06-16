@@ -66,7 +66,7 @@ def main():
     }
 
     # Load and preprocess data
-    file_path = 'pages/laptops.csv' 
+    file_path = 'pages/laptops.csv'  # Update with your dataset path
     X_train, X_test, y_train, y_test, brand_encoder = load_and_preprocess_data(file_path)
 
     # Train and save model
