@@ -9,9 +9,6 @@ import os
 # Check current directory
 print(f"Current directory: {os.getcwd()}")
 
-# Check sklearn version
-print(f"scikit-learn version: {sklearn.__version__}")
-
 # Load the trained Random Forest classifier from the saved file
 model_path = 'random_forest_model.pkl'
 
