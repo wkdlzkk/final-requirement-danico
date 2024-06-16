@@ -28,18 +28,29 @@ except FileNotFoundError as e:
 def load_and_preprocess_data(file_path):
     df = pd.read_csv(file_path)
 
+    # Check unique values in the 'brand' column
+    print(f"Unique brands: {df['brand'].unique()}")
+
     # Data preprocessing steps
     X = df[['Price', 'Rating']]
     y = df['year_of_warranty']
 
+    # Ensure 'brand' column is treated as categorical
+    df['brand'] = df['brand'].astype('category')
+
     brand_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
     brand_encoded = brand_encoder.fit_transform(df[['brand']])
+    
+    # Verify encoded categories
+    print(f"Encoded categories: {brand_encoder.categories_}")
+
     X = pd.concat([pd.DataFrame(brand_encoded), X], axis=1)
     X.columns = X.columns.astype(str)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     return X_train, X_test, y_train, y_test, brand_encoder
+
 
 # Function to make predictions
 def make_prediction(model, brand_encoder, new_instance):
