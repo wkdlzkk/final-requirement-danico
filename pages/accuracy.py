@@ -4,16 +4,26 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 import pickle
-import sklearn
+import os
+
+# Check current directory
+print(f"Current directory: {os.getcwd()}")
 
 # Check sklearn version
 print(f"scikit-learn version: {sklearn.__version__}")
 
 # Load the trained Random Forest classifier from the saved file
 model_path = 'random_forest_model.pkl'
+
+# Check if file exists
+if os.path.exists(model_path):
+    print(f"Model file found at: {model_path}")
+else:
+    print(f"Model file not found at: {model_path}")
+
 try:
     loaded_model = pickle.load(open(model_path, 'rb'))
-except ModuleNotFoundError as e:
+except FileNotFoundError as e:
     st.error(f"Error loading model: {e}")
 
 # Load your dataset and perform necessary preprocessing
